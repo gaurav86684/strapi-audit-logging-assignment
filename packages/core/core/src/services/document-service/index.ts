@@ -1,6 +1,7 @@
 import type { Core, Modules, UID } from '@strapi/types';
 
 import { createMiddlewareManager, databaseErrorsMiddleware } from './middlewares';
+import { createAuditMiddleware } from './middlewares/audit-middleware.js';
 import { createContentTypeRepository } from './repository';
 import { transformData } from './transform/data';
 
@@ -31,6 +32,7 @@ export const createDocumentService = (
   // Manager to handle document service middlewares
   const middlewares = createMiddlewareManager();
   middlewares.use(databaseErrorsMiddleware);
+  middlewares.use(createAuditMiddleware(strapi));
 
   const factory = function factory(uid: UID.ContentType) {
     if (repositories.has(uid)) {

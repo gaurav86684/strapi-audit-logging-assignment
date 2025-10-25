@@ -33,6 +33,7 @@ import getNumberOfConditionalFields from './services/utils/conditional-fields';
 import { FeaturesService, createFeaturesService } from './services/features';
 import { createDocumentService } from './services/document-service';
 import { createContentSourceMapsService } from './services/content-source-maps';
+import createAuditService from './services/audit-service/index.js';
 
 import { coreStoreModel } from './services/core-store';
 import { createConfigProvider } from './services/config';
@@ -295,7 +296,8 @@ class Strapi extends Container implements Core.Strapi {
         );
       })
       .add('reload', () => createReloader(this))
-      .add('content-source-maps', () => createContentSourceMapsService(this));
+      .add('content-source-maps', () => createContentSourceMapsService(this))
+      .add('audit-service', () => createAuditService(this));
   }
 
   sendStartupTelemetry() {
